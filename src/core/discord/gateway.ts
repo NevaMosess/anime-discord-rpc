@@ -18,7 +18,7 @@ export class DiscordGateway {
 			typeof storage.discord_token === "string" ? storage.discord_token : null;
 
 		if (!this.token) {
-			logger.log("[Gateway] No token found in storage.");
+			logger.error("[Gateway] No token found in storage.");
 			return;
 		}
 
@@ -66,7 +66,7 @@ export class DiscordGateway {
 			if (!this.isManualDisconnect) {
 				const backoff = Math.min(1000 * 2 ** this.reconnectAttempts, 30000);
 				this.reconnectAttempts++;
-				logger.log(`[Gateway] Reconnecting in ${backoff / 1000}s...`);
+				logger.warn(`[Gateway] Reconnecting in ${backoff / 1000}s...`);
 				setTimeout(() => this.connect(), backoff);
 			}
 		};
