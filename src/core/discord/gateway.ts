@@ -35,7 +35,6 @@ export class DiscordGateway {
 
 		this.ws.onopen = () => {
 			logger.log("[Gateway] Connected to WebSocket");
-			this.reconnectAttempts = 0;
 		};
 
 		this.ws.onmessage = (event) => {
@@ -50,6 +49,7 @@ export class DiscordGateway {
 
 			if (op === 0 && t === "READY") {
 				this.isReady = true;
+				this.reconnectAttempts = 0;
 				logger.log("[Gateway] Ready and authenticated!");
 			}
 
@@ -60,9 +60,16 @@ export class DiscordGateway {
 			}
 		};
 
-		this.ws.onclose = () => {
+		this.ws.onclose = (event: CloseEvent) => {
 			this.isReady = false;
 			this.stopHeartbeat();
+
+			if (event.code === 4004) {
+				logger.error("[Gateway] Token expired or invalid. Clearing token.");
+				browser.storage.local.remove("discord_token");
+				return;
+			}
+
 			if (!this.isManualDisconnect) {
 				const backoff = Math.min(1000 * 2 ** this.reconnectAttempts, 30000);
 				this.reconnectAttempts++;
