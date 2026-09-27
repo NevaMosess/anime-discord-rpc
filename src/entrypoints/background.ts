@@ -62,6 +62,32 @@ export default defineBackground(() => {
 		}
 	});
 
+	browser.storage.onChanged.addListener((changes, areaName) => {
+		if (areaName === "local" && changes.discord_token) {
+			if (!changes.discord_token.newValue && changes.discord_token.oldValue) {
+				logger.warn("Discord token expired or removed. Prompting for re-auth.");
+
+				if (browser.action?.openPopup) {
+					browser.action.openPopup().catch((err) => {
+						logger.warn(
+							"Popup blocked by browser security, falling back to tab.",
+							err,
+						);
+						browser.tabs.create({
+							url: browser.runtime.getURL("/popup.html"),
+							active: true,
+						});
+					});
+				} else {
+					browser.tabs.create({
+						url: browser.runtime.getURL("/popup.html"),
+						active: true,
+					});
+				}
+			}
+		}
+	});
+
 	browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		if (message.type === "LOGIN_DISCORD") {
 			browser.storage.local.remove("auth_error");
