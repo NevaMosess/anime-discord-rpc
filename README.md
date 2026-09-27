@@ -73,11 +73,11 @@ We currently support scraping metadata and video progress from the following sit
 * **HiAnime**
 * **Aniwatch**
 
-*Don't see your favorite site? See the [Contributing](/CONTRIBUTING.md) section to learn how to add it!*
+*Don't see your favorite site? See the [Contributing](./.github/CONTRIBUTING.md) section to learn how to add it!*
 
 ## Contributing
 
-Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for full details on how to set up your environment, write a new site strategy, and submit a Pull Request.
+Please see our [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for full details on how to set up your environment, write a new site strategy, and submit a Pull Request.
 
 ## License
 
