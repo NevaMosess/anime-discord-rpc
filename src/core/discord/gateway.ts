@@ -1,7 +1,7 @@
 import { APPLICATION_ID } from "../../shared/constants";
 import { logger } from "../../shared/logger";
 import type { PlaybackState } from "../../shared/types";
-import { getLargeImageKey } from "../discord/assets";
+import { getAppAssetId, getLargeImageKey } from "../discord/assets";
 
 export class DiscordGateway {
 	private ws: WebSocket | null = null;
@@ -142,7 +142,9 @@ export class DiscordGateway {
 
 		const largeImage = state.coverUrl
 			? await getLargeImageKey(state.coverUrl)
-			: "default_cover";
+			: await getAppAssetId("default_cover");
+
+		const smallImage = await getAppAssetId(state.isPaused ? "pause" : "play");
 
 		const payload = {
 			op: 3,
@@ -156,11 +158,13 @@ export class DiscordGateway {
 								type: 3,
 								application_id: APPLICATION_ID,
 								details: state.title,
-								state: `${state.episode} ${state.isPaused ? "(Paused)" : ""}`,
+								state: state.episode,
 								timestamps,
 								assets: {
 									large_image: largeImage,
 									large_text: state.title,
+									small_image: smallImage,
+									small_text: state.isPaused ? "paused" : "playing",
 								},
 							},
 						],
