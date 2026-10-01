@@ -30,13 +30,39 @@ async function registerExternalAsset(url: string): Promise<string | null> {
 
 const assetCache = new Map<string, string>();
 
-export async function getLargeImageKey(coverUrl: string): Promise<string> {
-	const cachedCoverUrl = assetCache.get(coverUrl);
-	if (!cachedCoverUrl) {
-		const key = await registerExternalAsset(coverUrl);
-		const final = key ?? "default_cover";
-		assetCache.set(coverUrl, final);
-		return final;
+export async function getLargeImageKey(
+	coverUrl: string,
+): Promise<string | undefined> {
+	const cached = assetCache.get(coverUrl);
+	if (cached) return cached;
+
+	const key = await registerExternalAsset(coverUrl);
+	if (key) {
+		assetCache.set(coverUrl, key);
+		return key;
 	}
-	return cachedCoverUrl;
+
+	return getAppAssetId("default_cover");
+}
+
+let appAssetIds: Map<string, string> | null = null;
+
+export async function getAppAssetId(name: string): Promise<string | undefined> {
+	if (!appAssetIds) {
+		try {
+			const res = await fetch(
+				`https://discord.com/api/v10/oauth2/applications/${APPLICATION_ID}/assets`,
+			);
+			if (!res.ok) {
+				logger.error("[Assets] list failed:", res.status, await res.text());
+				return undefined;
+			}
+			const list: { id: string; name: string }[] = await res.json();
+			appAssetIds = new Map(list.map((a) => [a.name, a.id]));
+		} catch (e) {
+			logger.error("[Assets] list error:", e);
+			return undefined;
+		}
+	}
+	return appAssetIds.get(name);
 }
