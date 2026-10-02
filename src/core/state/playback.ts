@@ -1,6 +1,7 @@
 export const currentAnimeState = {
 	title: "Unknown",
 	episode: "Unknown",
+	episodeName: "",
 	coverUrl: "",
 	currentMs: 0,
 	durationMs: 0,
@@ -10,6 +11,7 @@ export const currentAnimeState = {
 let lastBroadcast = {
 	title: "",
 	episode: "",
+	episodeName: "",
 	isPaused: false,
 	estimatedStart: 0,
 	durationMs: 0,
@@ -24,6 +26,7 @@ export function setActivityEnabledFlag(enabled: boolean) {
 export function clearAnimeState() {
 	currentAnimeState.title = "Unknown";
 	currentAnimeState.episode = "Unknown";
+	currentAnimeState.episodeName = "";
 	currentAnimeState.coverUrl = "";
 	currentAnimeState.currentMs = 0;
 	currentAnimeState.durationMs = 0;
@@ -32,6 +35,7 @@ export function clearAnimeState() {
 	lastBroadcast = {
 		title: "",
 		episode: "",
+		episodeName: "",
 		isPaused: false,
 		estimatedStart: 0,
 		durationMs: 0,
@@ -72,6 +76,7 @@ export function commitBroadcast(estimatedStart: number) {
 	lastBroadcast = {
 		title: currentAnimeState.title,
 		episode: currentAnimeState.episode,
+		episodeName: currentAnimeState.episodeName,
 		isPaused: currentAnimeState.isPaused,
 		estimatedStart,
 		durationMs: currentAnimeState.durationMs,
