@@ -172,6 +172,7 @@ export default defineBackground(() => {
 		if (message.type === "INFO_UPDATE") {
 			currentAnimeState.title = message.title;
 			currentAnimeState.episode = message.episode;
+			currentAnimeState.episodeName = message.episodeName;
 			currentAnimeState.coverUrl = message.coverUrl;
 		} else if (message.type === "TIME_UPDATE") {
 			currentAnimeState.currentMs = message.currentMs;

@@ -42,6 +42,7 @@ export function useExtensionStatus() {
 				setCurrentAnime({
 					title: anime.title,
 					episode: anime.episode,
+					episodeName: anime.episodeName,
 					coverUrl: anime.coverUrl,
 					isPaused: !!anime.isPaused,
 				});

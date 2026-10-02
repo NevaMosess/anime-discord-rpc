@@ -123,6 +123,7 @@ export class DiscordGateway {
 		state: PlaybackState & {
 			title: string;
 			episode: string;
+			episodeName?: string;
 			coverUrl: string;
 			currentMs: number;
 			durationMs: number;
@@ -146,6 +147,9 @@ export class DiscordGateway {
 
 		const smallImage = await getAppAssetId(state.isPaused ? "pause" : "play");
 
+		const presenceState =
+			state.episode + (state.episodeName ? `: ${state.episodeName}` : "");
+
 		const payload = {
 			op: 3,
 			d: {
@@ -158,7 +162,7 @@ export class DiscordGateway {
 								type: 3,
 								application_id: APPLICATION_ID,
 								details: state.title,
-								state: state.episode,
+								state: presenceState,
 								timestamps,
 								assets: {
 									large_image: largeImage,
