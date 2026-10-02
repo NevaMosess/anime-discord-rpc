@@ -47,6 +47,7 @@ export default defineContentScript({
 						type: "INFO_UPDATE",
 						title: meta.title,
 						episode: meta.episode,
+						episodeName: meta.episodeName,
 						coverUrl: meta.coverUrl,
 					});
 				}
