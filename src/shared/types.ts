@@ -6,6 +6,7 @@ export interface ActiveState {
 	type: "WATCHING" | "PAUSED";
 	title: string;
 	episode: string;
+	episodeName?: string;
 	coverUrl: string;
 	currentMs: number;
 	durationMs: number;
@@ -16,6 +17,7 @@ export type PlaybackState = StoppedState | ActiveState;
 export interface AnimeMetadata {
 	title: string | null | undefined;
 	episode: string | null | undefined;
+	episodeName?: string | null | undefined;
 	coverUrl: string | null | undefined;
 }
 
@@ -36,6 +38,7 @@ export interface AnimeSite {
 export interface AnimeState {
 	title: string;
 	episode: string;
+	episodeName?: string;
 	coverUrl: string;
 	isPaused: boolean;
 }
