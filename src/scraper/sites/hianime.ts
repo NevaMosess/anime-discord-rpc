@@ -8,17 +8,23 @@ export const hianimeStrategy: AnimeSite = {
 	getAnimeMetadata: () => {
 		const titleElement = document.querySelector(".anisc-detail .film-name a");
 		const episodeElement = document.querySelector(".server-notice b");
+		const episodeNameElement = document.querySelector(
+			".ss-list a.active .ep-name, .ep-item.active .ep-name",
+		);
 		const imageElement = document.querySelector(
 			".anisc-poster .film-poster img",
 		) as HTMLImageElement;
 
 		const title = titleElement?.textContent?.trim();
 		const episode = episodeElement?.textContent?.trim();
+		const episodeName = episodeNameElement?.textContent?.trim();
 		const coverUrl = imageElement?.src;
 
 		return {
 			title: titleElement ? title : null,
 			episode: episodeElement ? episode : null,
+			episodeName:
+				episodeNameElement && episode !== episodeName ? episodeName : null,
 			coverUrl: coverUrl ? coverUrl : null,
 		};
 	},
