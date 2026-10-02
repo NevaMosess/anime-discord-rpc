@@ -12,6 +12,9 @@ A lightweight, purely standalone browser extension that natively broadcasts the 
 ![Forks](https://img.shields.io/github/forks/minkxx/anime-discord-rpc?style=flat)
 ![Version](https://img.shields.io/badge/version-v2.3.0-blue?style=flat&labelColor=#808080)
 
+<!-- DOWNLOADS:START -->
+<!-- DOWNLOADS:END -->
+
 </div>
 
 ## How to use
