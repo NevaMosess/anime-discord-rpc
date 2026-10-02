@@ -7,6 +7,9 @@ interface NowPlayingCardProps {
 }
 
 export function NowPlayingCard({ anime }: NowPlayingCardProps) {
+	const episode =
+		anime.episode + (anime.episodeName ? `: ${anime.episodeName}` : "");
+
 	return (
 		<AnimatePresence mode="wait">
 			<motion.div
@@ -17,7 +20,7 @@ export function NowPlayingCard({ anime }: NowPlayingCardProps) {
 				transition={{ duration: 0.25, ease: "easeOut" }}
 				className="flex flex-col items-center"
 			>
-				<div className="relative h-62 w-46 overflow-hidden rounded-2xl border border-white/10 bg-panel-2">
+				<div className="relative h-52 w-38 overflow-hidden rounded-2xl border border-white/10 bg-panel-2">
 					{anime.coverUrl ? (
 						<img
 							src={anime.coverUrl}
@@ -57,7 +60,7 @@ export function NowPlayingCard({ anime }: NowPlayingCardProps) {
 					<h3 className="mt-1 line-clamp-2 text-[15px] font-bold leading-snug text-ink">
 						{anime.title}
 					</h3>
-					<p className="mt-1 text-[11px] text-muted">{anime.episode}</p>
+					<p className="mt-1 text-[11px] text-muted">{episode}</p>
 				</div>
 			</motion.div>
 		</AnimatePresence>
